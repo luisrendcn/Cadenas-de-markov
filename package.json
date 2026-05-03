@@ -1,0 +1,61 @@
+{
+  "name": "markov-chain-desktop-suite",
+  "version": "1.0.0",
+  "description": "Offline Electron desktop app with a local Express API for Markov chain exercises.",
+  "main": "src/electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable",
+    "dist:installer": "electron-builder --win nsis",
+    "api": "node src/api/server.js",
+    "smoke": "node -e \"const { computeAll } = require('./src/api/markov'); const result = computeAll({ matrix: [[0.7,0.2,0.1],[0.25,0.5,0.25],[0.15,0.25,0.6]], vector: [1,0,0], iterations: 10, costs: [12,9,15], stateNames: ['Netflix','Disney+','Prime Video'] }); console.log(JSON.stringify({ final: result.evolution.finalVector, stationary: result.stationary.distribution, cumulative: result.costs.cumulativeExpectedValue }, null, 2));\""
+  },
+  "keywords": [
+    "electron",
+    "markov",
+    "matrix",
+    "express",
+    "chartjs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chart.js": "^4.4.8",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "ml-matrix": "^6.12.1"
+  },
+  "devDependencies": {
+    "electron": "41.3.0",
+    "electron-builder": "26.0.12",
+    "qrcode": "^1.5.4"
+  },
+  "build": {
+    "appId": "com.markov.desktop.suite",
+    "productName": "Markov Chain Desktop Suite",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ]
+    },
+    "portable": {
+      "artifactName": "Markov-Chain-Desktop-Suite-Portable-${version}.${ext}"
+    },
+    "nsis": {
+      "artifactName": "Markov-Chain-Desktop-Suite-Setup-${version}.${ext}",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Markov Chain Desktop Suite"
+    }
+  }
+}

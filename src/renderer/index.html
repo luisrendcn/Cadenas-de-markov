@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markov Chain Desktop Suite</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script defer src="../../node_modules/chart.js/dist/chart.umd.js"></script>
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Offline Markov solver</p>
+          <h1>Markov Chain Desktop Suite</h1>
+          <p class="subtitle">Interactive solver for transition matrices, convergence, and steady-state analysis</p>
+        </div>
+        <div class="hero-actions">
+          <button class="secondary-button" id="exampleButton" type="button">Load example</button>
+          <button class="secondary-button" id="csvButton" type="button">Export CSV</button>
+          <button class="secondary-button" id="pdfButton" type="button">Export PDF</button>
+          <button class="primary-button" id="computeButton" type="button">Compute</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel input-panel" aria-labelledby="inputTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Inputs</p>
+              <h2 id="inputTitle">Model</h2>
+            </div>
+            <span class="api-status" id="apiStatus">API starting</span>
+          </div>
+
+          <div class="control-grid">
+            <label class="field">
+              <span>States</span>
+              <div class="stepper">
+                <button id="decreaseSizeButton" type="button">-</button>
+                <input id="sizeInput" min="1" step="1" type="number" value="3">
+                <button id="increaseSizeButton" type="button">+</button>
+              </div>
+            </label>
+
+            <label class="field">
+              <span>Iterations</span>
+              <input id="iterationsInput" min="1" max="500" step="1" type="number" value="10">
+            </label>
+
+            <label class="toggle-field">
+              <input id="includeCostsInput" type="checkbox" checked>
+              <span>Costs or revenues</span>
+            </label>
+
+            <button class="secondary-button full-width" id="normalizeButton" type="button">Normalize rows</button>
+          </div>
+
+          <div class="editor-block">
+            <div class="mini-heading">
+              <h3>State names</h3>
+            </div>
+            <div class="state-name-grid" id="stateNameEditor"></div>
+          </div>
+
+          <div class="editor-block">
+            <div class="mini-heading">
+              <h3>Transition matrix</h3>
+              <span>P</span>
+            </div>
+            <div class="matrix-scroll">
+              <div class="matrix-grid" id="matrixEditor"></div>
+            </div>
+          </div>
+
+          <div class="editor-block">
+            <div class="mini-heading">
+              <h3>Initial vector</h3>
+              <span>v0</span>
+            </div>
+            <div class="vector-grid" id="vectorEditor"></div>
+          </div>
+
+          <div class="editor-block" id="costEditorBlock">
+            <div class="mini-heading">
+              <h3>Costs or revenues</h3>
+              <span>c</span>
+            </div>
+            <div class="vector-grid" id="costEditor"></div>
+          </div>
+        </section>
+
+        <section class="output-stack">
+          <section class="panel" aria-live="polite">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Results</p>
+                <h2>Evolution</h2>
+              </div>
+              <span class="status-pill" id="statusMessage">Ready</span>
+            </div>
+            <div class="table-wrap">
+              <table id="evolutionTable"></table>
+            </div>
+          </section>
+
+          <section class="insight-grid">
+            <div class="panel">
+              <div class="section-heading compact">
+                <div>
+                  <p class="eyebrow">Matrix</p>
+                  <h2>Heatmap</h2>
+                </div>
+              </div>
+              <div class="heatmap-wrap">
+                <div class="heatmap-grid" id="heatmap"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="section-heading compact">
+                <div>
+                  <p class="eyebrow">Long run</p>
+                  <h2>Stationary distribution</h2>
+                </div>
+              </div>
+              <div class="stationary-list" id="stationaryList"></div>
+              <div class="chart-box pie-box">
+                <canvas id="stationaryChart"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">Convergence</p>
+                <h2>State probabilities</h2>
+              </div>
+            </div>
+            <div class="chart-box">
+              <canvas id="lineChart"></canvas>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">Powers</p>
+                <h2>Matrix powers</h2>
+              </div>
+              <label class="select-field">
+                <span>Power</span>
+                <select id="powerSelect"></select>
+              </label>
+            </div>
+            <div class="table-wrap">
+              <table id="powerTable"></table>
+            </div>
+          </section>
+
+          <section class="panel" id="costResultsPanel">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">Value</p>
+                <h2>Cost and revenue totals</h2>
+              </div>
+            </div>
+            <div class="summary-grid" id="costSummary"></div>
+            <div class="table-wrap">
+              <table id="costTable"></table>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
