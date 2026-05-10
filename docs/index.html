@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EquiFlow | Plataforma Integral de Gestión y Fortalecimiento de Equipos Académicos</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Navegación principal">
+        <a class="brand" href="#inicio" data-nav="inicio" aria-label="Ir al inicio">
+          <span class="brand-mark">EF</span>
+          <span>
+            <strong>EquiFlow</strong>
+            <small>Gestión de equipos académicos</small>
+          </span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sectionNav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="section-nav" id="sectionNav">
+          <button class="nav-link active" type="button" data-nav="inicio">Inicio</button>
+          <button class="nav-link" type="button" data-nav="introduccion">Introducción</button>
+          <button class="nav-link" type="button" data-nav="problema">Problema</button>
+          <button class="nav-link" type="button" data-nav="solucion">Solución</button>
+          <button class="nav-link" type="button" data-nav="dofa">DOFA</button>
+          <button class="nav-link" type="button" data-nav="pestel">PESTEL</button>
+          <button class="nav-link" type="button" data-nav="canvas">Canvas</button>
+          <button class="nav-link" type="button" data-nav="inversion">Inversión</button>
+          <button class="nav-link" type="button" data-nav="riesgos">Riesgos</button>
+          <button class="nav-link" type="button" data-nav="plan">Plan de trabajo</button>
+          <button class="nav-link" type="button" data-nav="conclusiones">Conclusiones</button>
+        </nav>
+      </header>
+
+      <main class="deck" id="deck">
+        <section class="section-panel hero-panel active" id="inicio" data-section="inicio" aria-labelledby="inicio-title">
+          <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="eyebrow">Plataforma Integral</p>
+              <h1 id="inicio-title">EquiFlow</h1>
+              <p class="hero-subtitle">Plataforma Integral de Gestión y Fortalecimiento de Equipos Académicos</p>
+              <p class="hero-description">
+                Este documento formula un proyecto viable que combina soluciones técnicas y humanas para mejorar el rendimiento de los equipos académicos, fortalecer el bienestar emocional de los estudiantes y optimizar los procesos de trabajo colaborativo.
+              </p>
+              <div class="hero-actions">
+                <button class="primary-button" type="button" data-jump="introduccion">Explorar Proyecto</button>
+                <button class="ghost-button" type="button" data-jump="solucion">Ver solución</button>
+              </div>
+            </div>
+
+            <div class="hero-visual reveal delay-1" aria-hidden="true">
+              <div class="orbit-card card-a">
+                <span>Roles</span>
+                <strong>Equipo</strong>
+              </div>
+              <div class="orbit-card card-b">
+                <span>Tareas</span>
+                <strong>Seguimiento</strong>
+              </div>
+              <div class="orbit-card card-c">
+                <span>Bienestar</span>
+                <strong>Motivación</strong>
+              </div>
+              <div class="platform-core">
+                <span>EF</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-panel" id="introduccion" data-section="introduccion" aria-labelledby="introduccion-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Introducción</p>
+            <h2 id="introduccion-title">Contexto académico y colaborativo</h2>
+            <p>
+              A través de un estudio de mercado enfocado en equipos de trabajo con bajo rendimiento académico, se validó que la falta de interacción y coordinación es un factor determinante que impacta negativamente el bienestar emocional de los estudiantes y, con ello, la productividad académica.
+            </p>
+          </div>
+
+          <div class="intro-layout">
+            <article class="glass-card quote-card reveal delay-1">
+              <span class="quote-mark">“</span>
+              <p>La falta de interacción y coordinación impacta negativamente el bienestar emocional y la productividad académica de los estudiantes.</p>
+            </article>
+            <div class="intro-cards">
+              <article class="content-card reveal delay-2">
+                <span class="card-index">01</span>
+                <h3>Bajo rendimiento académico</h3>
+                <p>Estudio de mercado enfocado en equipos de trabajo con bajo rendimiento académico.</p>
+              </article>
+              <article class="content-card reveal delay-3">
+                <span class="card-index">02</span>
+                <h3>Falta de interacción y coordinación</h3>
+                <p>Se evidencian dificultades en la comunicación, la definición de roles y la gestión de responsabilidades.</p>
+              </article>
+              <article class="content-card reveal delay-4">
+                <span class="card-index">03</span>
+                <h3>Impacto emocional y académico</h3>
+                <p>Estos elementos generan un ambiente de trabajo poco favorable, que se traduce en estrés, reprocesos y desmotivación.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-panel" id="problema" data-section="problema" aria-labelledby="problema-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Declaración del Problema</p>
+            <h2 id="problema-title">Baja productividad y deterioro del bienestar emocional</h2>
+            <p>
+              El problema central identificado es la baja productividad y el deterioro del bienestar emocional de los estudiantes universitarios, resultante de la ineficaz interacción y coordinación dentro de sus equipos de trabajo académico.
+            </p>
+          </div>
+
+          <div class="expand-grid" data-expand-group>
+            <button class="expand-card reveal delay-1 active" type="button">
+              <span class="card-index">01</span>
+              <h3>Estrés prolongado y frustración</h3>
+              <p>Los estudiantes sufren las consecuencias de la mala comunicación y la falta de coordinación, lo que conduce al estancamiento académico y afecta su vida personal.</p>
+            </button>
+            <button class="expand-card reveal delay-2" type="button">
+              <span class="card-index">02</span>
+              <h3>Reprocesos y pérdida de tiempo</h3>
+              <p>La mala coordinación conlleva a la pérdida de tiempo en actividades que deben rehacerse, afectando la eficiencia del equipo.</p>
+            </button>
+            <button class="expand-card reveal delay-3" type="button">
+              <span class="card-index">03</span>
+              <h3>Ambiente de estudio incómodo</h3>
+              <p>La falta de interacción positiva obstaculiza el proceso de aprendizaje colaborativo y deteriora la motivación.</p>
+            </button>
+          </div>
+
+          <article class="wide-note reveal delay-4">
+            <p>En síntesis, el problema no se limita al rendimiento académico medible, sino que abarca el clima emocional, la experiencia de trabajo en equipo y la sostenibilidad de los procesos colaborativos.</p>
+          </article>
+        </section>
+
+        <section class="section-panel" id="solucion" data-section="solucion" aria-labelledby="solucion-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Solución Propuesta</p>
+            <h2 id="solucion-title">Intervención técnica y humana</h2>
+            <p>
+              Dado que la recolección de la información evidenció que la ineficiencia y la baja productividad se deben principalmente a factores como la saturación de responsabilidades, la ausencia de liderazgo y la falta de canales de comunicación, se concluyó que la solución debe combinar componentes técnicos y componentes humanos.
+            </p>
+          </div>
+
+          <div class="module-grid">
+            <article class="module-card reveal delay-1 active" data-module>
+              <button class="module-trigger" type="button">
+                <span class="module-icon">T</span>
+                <span>
+                  <small>Intervención Técnica</small>
+                  <strong>Estructuración de Roles y Tareas</strong>
+                </span>
+              </button>
+              <div class="module-body">
+                <ul>
+                  <li>Proporcionar herramientas para la asignación clara de roles dentro del equipo.</li>
+                  <li>Permitir el seguimiento de tareas, responsables y fechas de entrega.</li>
+                  <li>Gestionar tiempos y cargas de trabajo para evitar saturación y reprocesos.</li>
+                  <li>Generar reportes de avance que permitan identificar cuellos de botella.</li>
+                </ul>
+                <p>Con esto se busca reducir la frecuencia de errores y reprocesos documentada en el estudio de mercado, así como mejorar la eficiencia general de los equipos.</p>
+              </div>
+            </article>
+
+            <article class="module-card reveal delay-2" data-module>
+              <button class="module-trigger" type="button">
+                <span class="module-icon">H</span>
+                <span>
+                  <small>Intervención Humana</small>
+                  <strong>Comunicación y Motivación</strong>
+                </span>
+              </button>
+              <div class="module-body">
+                <ul>
+                  <li>Ofrecer módulos de capacitación sobre habilidades blandas (comunicación asertiva, trabajo en equipo, liderazgo colaborativo).</li>
+                  <li>Incluir contenidos sobre resolución de conflictos y manejo de desacuerdos.</li>
+                  <li>Promover prácticas de retroalimentación constructiva entre los miembros del equipo.</li>
+                  <li>Incorporar elementos de motivación y reconocimiento al esfuerzo colectivo.</li>
+                </ul>
+                <p>Estos componentes apuntan a reducir los niveles de estrés percibido, la frecuencia de conflictos interpersonales y el "mal ambiente" que afecta el rendimiento académico.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-panel" id="dofa" data-section="dofa" aria-labelledby="dofa-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Matriz DOFA</p>
+            <h2 id="dofa-title">Factores internos y externos</h2>
+            <p>A continuación, se presenta la matriz DOFA del proyecto.</p>
+          </div>
+
+          <div class="dofa-grid" data-expand-group>
+            <button class="dofa-card strength reveal delay-1 active" type="button">
+              <span>Fortalezas (F)</span>
+              <h3>Identificación y enfoque dual</h3>
+              <ul>
+                <li>F1. Identificación clara y validada del problema central (falta de coordinación y bienestar).</li>
+                <li>F2. Enfoque dual (técnico + humano) que permite una solución integral.</li>
+              </ul>
+            </button>
+            <button class="dofa-card opportunity reveal delay-2" type="button">
+              <span>Oportunidades (O)</span>
+              <h3>Demanda y alianzas</h3>
+              <ul>
+                <li>O1. Alta demanda, ya que existen numerosos grupos con bajo rendimiento académico.</li>
+                <li>O2. Posibilidad de alianzas con el área de Bienestar Universitario para la implementación de la intervención humana.</li>
+              </ul>
+            </button>
+            <button class="dofa-card weakness reveal delay-3" type="button">
+              <span>Debilidades (D)</span>
+              <h3>Adopción y capacitación</h3>
+              <ul>
+                <li>D1. Dependencia de que los usuarios adopten la solución y se adapten a ella.</li>
+                <li>D2. Posible resistencia inicial a la capacitación en habilidades blandas.</li>
+              </ul>
+            </button>
+            <button class="dofa-card threat reveal delay-4" type="button">
+              <span>Amenazas (A)</span>
+              <h3>Competencia y participación</h3>
+              <ul>
+                <li>A1. Existencia de herramientas genéricas de gestión de proyectos (competencia).</li>
+                <li>A2. Baja participación sostenida por parte de los estudiantes en procesos voluntarios.</li>
+              </ul>
+            </button>
+          </div>
+        </section>
+
+        <section class="section-panel" id="pestel" data-section="pestel" aria-labelledby="pestel-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Análisis PESTEL</p>
+            <h2 id="pestel-title">Factores del entorno</h2>
+            <p>Selecciona un factor para abrir el panel con el contenido correspondiente.</p>
+          </div>
+
+          <div class="pestel-grid">
+            <button class="pestel-card reveal delay-1" type="button" data-modal-key="politicos"><span>P</span><strong>Políticos</strong></button>
+            <button class="pestel-card reveal delay-2" type="button" data-modal-key="economicos"><span>E</span><strong>Económicos</strong></button>
+            <button class="pestel-card reveal delay-3" type="button" data-modal-key="sociales"><span>S</span><strong>Sociales</strong></button>
+            <button class="pestel-card reveal delay-4" type="button" data-modal-key="tecnologicos"><span>T</span><strong>Tecnológicos</strong></button>
+            <button class="pestel-card reveal delay-5" type="button" data-modal-key="ecologicos"><span>E</span><strong>Ecológicos</strong></button>
+            <button class="pestel-card reveal delay-6" type="button" data-modal-key="legales"><span>L</span><strong>Legales</strong></button>
+          </div>
+        </section>
+
+        <section class="section-panel" id="canvas" data-section="canvas" aria-labelledby="canvas-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Modelo de Negocio Canvas</p>
+            <h2 id="canvas-title">Bloques clickeables del modelo</h2>
+            <p>A continuación, se presenta el modelo de negocios Canvas del proyecto.</p>
+          </div>
+
+          <div class="canvas-layout">
+            <div class="canvas-grid reveal delay-1" id="canvasGrid"></div>
+            <aside class="canvas-detail reveal delay-2" id="canvasDetail" aria-live="polite"></aside>
+          </div>
+        </section>
+
+        <section class="section-panel" id="inversion" data-section="inversion" aria-labelledby="inversion-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Inversión de los $20.000.000</p>
+            <h2 id="inversion-title">Distribución de inversión</h2>
+            <p>La siguiente tabla presenta una propuesta preliminar de distribución de la inversión, pensada para los primeros seis meses del proyecto.</p>
+          </div>
+
+          <div class="investment-wrap reveal delay-1">
+            <table class="investment-table">
+              <thead>
+                <tr>
+                  <th>Rubro</th>
+                  <th>Monto estimado (COP)</th>
+                  <th>Justificación</th>
+                  <th>Distribución gráfica</th>
+                </tr>
+              </thead>
+              <tbody id="investmentRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section-panel" id="riesgos" data-section="riesgos" aria-labelledby="riesgos-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Riesgos y Mitigación</p>
+            <h2 id="riesgos-title">Riesgos derivados de DOFA y PESTEL</h2>
+            <p>Derivados de la matriz DOFA y del análisis PESTEL, se identifican los siguientes riesgos.</p>
+          </div>
+
+          <div class="accordion reveal delay-1" id="riskAccordion"></div>
+        </section>
+
+        <section class="section-panel" id="plan" data-section="plan" aria-labelledby="plan-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Plan de Trabajo – Primeros 6 Meses</p>
+            <h2 id="plan-title">Plan general de actividades</h2>
+            <p>Plan general de actividades en caso de ser seleccionado el proyecto.</p>
+          </div>
+
+          <div class="timeline reveal delay-1" id="timeline"></div>
+        </section>
+
+        <section class="section-panel" id="conclusiones" data-section="conclusiones" aria-labelledby="conclusiones-title">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Conclusiones</p>
+            <h2 id="conclusiones-title">Viabilidad, necesidad y coherencia estratégica</h2>
+          </div>
+
+          <div class="conclusion-grid">
+            <article class="content-card conclusion-card reveal delay-1">
+              <span class="card-index">01</span>
+              <h3>Validación del problema</h3>
+              <p>El estudio de mercado y la formulación inicial confirmaron la viabilidad y la necesidad de abordar la problemática de la coordinación y el bienestar en los equipos de trabajo universitarios. Se validó que el segmento de equipos de la Universidad Luis Amigó con baja rotación o bajo rendimiento es el público objetivo principal y que sufre directamente las consecuencias de la mala comunicación y la falta de coordinación.</p>
+            </article>
+            <article class="content-card conclusion-card reveal delay-2">
+              <span class="card-index">02</span>
+              <h3>Respuesta técnica y humana</h3>
+              <p>La necesidad de intervención está justificada por los datos esperados a recolectar (tiempos perdidos, niveles de estrés, frecuencia de conflictos), lo que avala una intervención técnica y humana para aumentar la productividad y reducir el mal ambiente. La plataforma integral propuesta articula herramientas de gestión de tareas con procesos de formación en habilidades blandas, generando una respuesta coherente a las causas del problema.</p>
+            </article>
+            <article class="content-card conclusion-card reveal delay-3">
+              <span class="card-index">03</span>
+              <h3>Coherencia de la solución</h3>
+              <p>Los análisis DOFA y PESTEL demostraron la coherencia estratégica del proyecto, señalando que, a pesar de amenazas como la existencia de herramientas genéricas de gestión de proyectos y la posible baja participación sostenida, existen oportunidades claras, como el apoyo institucional y las alianzas con Bienestar Universitario, que pueden apalancar la solución propuesta y potenciar su impacto.</p>
+            </article>
+          </div>
+
+          <footer class="site-footer reveal delay-4">
+            <p>Juan Camilo Ossa Gutiérrez</p>
+            <p>Luis Fernando Rendón López</p>
+            <p>Universidad Católica Luis Amigó</p>
+            <p>Facultad de Ingeniería</p>
+            <p>Medellín, Colombia</p>
+            <p>2026</p>
+          </footer>
+        </section>
+      </main>
+
+      <div class="deck-controls" aria-label="Controles de navegación">
+        <button class="control-button" type="button" id="prevSection">Anterior</button>
+        <div class="progress-track" aria-hidden="true"><span id="progressBar"></span></div>
+        <button class="control-button" type="button" id="nextSection">Siguiente</button>
+      </div>
+    </div>
+
+    <div class="modal" id="contentModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-backdrop" data-close-modal></div>
+      <article class="modal-card">
+        <button class="modal-close" type="button" data-close-modal aria-label="Cerrar">×</button>
+        <p class="eyebrow" id="modalEyebrow">PESTEL</p>
+        <h2 id="modalTitle"></h2>
+        <p id="modalText"></p>
+      </article>
+    </div>
+  </body>
+</html>
