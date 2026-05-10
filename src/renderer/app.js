@@ -1,756 +1,609 @@
-const model = {
-  apiBaseUrl: "",
-  size: 3,
-  iterations: 10,
-  includeCosts: true,
-  stateNames: ["Netflix", "Disney+", "Prime Video"],
-  matrix: [
-    [0.7, 0.2, 0.1],
-    [0.25, 0.5, 0.25],
-    [0.15, 0.25, 0.6]
-  ],
-  vector: [1, 0, 0],
-  costs: [12, 9, 15],
-  result: null,
-  charts: {
-    line: null,
-    pie: null
+const sections = [
+  "inicio",
+  "introduccion",
+  "problema",
+  "solucion",
+  "dofa",
+  "pestel",
+  "canvas",
+  "inversion",
+  "riesgos",
+  "plan",
+  "conclusiones"
+];
+
+const pestelContent = {
+  politicos: {
+    title: "Factores Políticos",
+    text: "El proyecto se desarrolla en un entorno educativo regulado por políticas institucionales y normativas del sector educativo. Las decisiones del gobierno en materia de educación superior, así como las políticas internas de la universidad, pueden influir en la adopción de herramientas tecnológicas, la implementación de programas de bienestar estudiantil, y la priorización de recursos para proyectos de innovación académica. La alineación con las políticas institucionales y los lineamientos del Ministerio de Educación es clave para la sostenibilidad del proyecto."
+  },
+  economicos: {
+    title: "Factores Económicos",
+    text: "El acceso a recursos financieros por parte de los estudiantes y de la institución puede afectar la implementación de la plataforma. Aspectos relevantes incluyen el presupuesto universitario destinado a tecnologías educativas, la capacidad de inversión en infraestructura tecnológica y licencias, y posibles modelos de financiación (suscripción institucional, patrocinios, alianzas). La viabilidad económica del proyecto dependerá de un uso eficiente de los recursos y de la claridad en la propuesta de valor para la universidad."
+  },
+  sociales: {
+    title: "Factores Sociales",
+    text: "El proyecto responde directamente a problemáticas sociales como estrés académico y desgaste emocional, falta de comunicación efectiva en equipos de trabajo, y deterioro del bienestar emocional y de la motivación. También considera hábitos de estudio de los estudiantes, cultura de trabajo en equipo dentro de la universidad, y disposición de los estudiantes para adoptar nuevas dinámicas colaborativas y herramientas digitales."
+  },
+  tecnologicos: {
+    title: "Factores Tecnológicos",
+    text: "La disponibilidad de herramientas digitales, el acceso a internet y el nivel de alfabetización tecnológica de los estudiantes son factores clave para el éxito de la plataforma. Incluye el uso de software de gestión de tareas y proyectos, integración con plataformas educativas existentes, y acceso desde dispositivos móviles y computadores. Estos elementos representan una oportunidad para mejorar la productividad académica mediante soluciones tecnológicas accesibles y usables."
+  },
+  ecologicos: {
+    title: "Factores Ecológicos",
+    text: "Aunque el impacto ambiental del proyecto es bajo, el uso de una plataforma digital contribuye a la reducción del consumo de papel, disminución de impresiones físicas de documentos y cronogramas, y promoción de prácticas más sostenibles dentro del entorno académico."
+  },
+  legales: {
+    title: "Factores Legales",
+    text: "El desarrollo del proyecto debe cumplir con normativas relacionadas con la protección de datos personales, regulaciones sobre el uso de plataformas digitales en contextos educativos, y políticas institucionales de la universidad sobre privacidad y seguridad de la información. Es fundamental garantizar la confidencialidad, integridad y disponibilidad de los datos de los usuarios."
   }
 };
 
-const palette = [
-  "#168f82",
-  "#d65d4a",
-  "#b9861f",
-  "#4d5fc4",
-  "#4f9b58",
-  "#c25284",
-  "#2574a8",
-  "#7c6a2f"
+const canvasBlocks = [
+  {
+    key: "socios",
+    title: "Socios clave",
+    items: ["Universidades", "Desarrolladores", "Comunidades estudiantiles"]
+  },
+  {
+    key: "actividades",
+    title: "Actividades clave",
+    items: ["Desarrollo de software", "Mantenimiento y actualizaciones", "Desarrollo de habilidades blandas"]
+  },
+  {
+    key: "valor",
+    title: "Propuesta de valor",
+    className: "value",
+    items: ["Mejor comunicación en equipos académicos", "Claridad de roles y responsabilidades", "Seguimiento estructurado de tareas"]
+  },
+  {
+    key: "relaciones",
+    title: "Relaciones con los clientes",
+    items: ["Soporte digital", "Tutoriales y materiales de uso", "Uso intuitivo de la plataforma"]
+  },
+  {
+    key: "segmento",
+    title: "Segmento de clientes",
+    items: ["Estudiantes universitarios", "Equipos de trabajo académicos", "Docentes interesados"]
+  },
+  {
+    key: "recursos",
+    title: "Recursos clave",
+    items: ["Plataforma tecnológica", "Base de usuarios", "Equipo de soporte técnico", "Contenidos de formación"]
+  },
+  {
+    key: "canales",
+    title: "Canales",
+    items: ["Aplicación web", "Plataformas educativas", "Redes sociales internas", "Comunicación universitaria"]
+  },
+  {
+    key: "costos",
+    title: "Estructura de costos",
+    className: "costs",
+    items: ["Desarrollo de software", "Infraestructura tecnológica", "Soporte técnico", "Marketing y difusión"]
+  },
+  {
+    key: "ingresos",
+    title: "Flujo de ingresos",
+    className: "income",
+    items: ["Suscripción institucional", "Anuncios (versiones gratuitas)", "Versión premium", "Convenios institucionales"]
+  }
 ];
 
-let elements = {};
+const investmentRows = [
+  {
+    rubro: "Desarrollo de la plataforma tecnológica",
+    monto: "$8.000.000",
+    value: 8000000,
+    justificacion: "Diseño, programación, pruebas, arquitectura inicial y despliegue del sistema."
+  },
+  {
+    rubro: "Infraestructura y hosting",
+    monto: "$3.000.000",
+    value: 3000000,
+    justificacion: "Servidores, dominios, bases de datos, almacenamiento y servicios en la nube."
+  },
+  {
+    rubro: "Capacitación en habilidades blandas",
+    monto: "$3.500.000",
+    value: 3500000,
+    justificacion: "Diseño e implementación de talleres, módulos formativos y material pedagógico."
+  },
+  {
+    rubro: "Soporte técnico y mantenimiento inicial",
+    monto: "$2.000.000",
+    value: 2000000,
+    justificacion: "Corrección de errores, ajustes, acompañamiento a usuarios y optimización."
+  },
+  {
+    rubro: "Marketing interno y comunicación",
+    monto: "$1.500.000",
+    value: 1500000,
+    justificacion: "Campañas de difusión, material gráfico, activaciones y comunicación institucional."
+  },
+  {
+    rubro: "Evaluación y medición de impacto",
+    monto: "$2.000.000",
+    value: 2000000,
+    justificacion: "Encuestas, análisis de datos, métricas de uso, reportes y retroalimentación."
+  },
+  {
+    rubro: "TOTAL",
+    monto: "$20.000.000",
+    value: 20000000,
+    justificacion: "Inversión total para los primeros 6 meses del proyecto"
+  }
+];
 
-function formatNumber(value, digits = 6) {
-  return new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: digits,
-    minimumFractionDigits: 0
-  }).format(Number(value));
+const risks = [
+  {
+    risk: "Baja adopción de la plataforma por parte de los estudiantes",
+    origin: "Debilidad (D1) / Social",
+    mitigation: "Campañas de sensibilización, tutoriales claros, acompañamiento inicial y soporte cercano."
+  },
+  {
+    risk: "Resistencia a la capacitación en habilidades blandas",
+    origin: "Debilidad (D2) / Social",
+    mitigation: "Ofrecer microcursos breves, gamificación, certificaciones internas y reconocimiento."
+  },
+  {
+    risk: "Competencia de herramientas genéricas de gestión",
+    origin: "Amenaza (A1) / Tecnológico",
+    mitigation: "Diferenciarse por el enfoque integral (técnico + humano) y la adaptación al contexto local."
+  },
+  {
+    risk: "Baja participación sostenida en procesos voluntarios",
+    origin: "Amenaza (A2) / Social",
+    mitigation: "Integrar el uso de la plataforma a actividades curriculares y proyectos de aula."
+  },
+  {
+    risk: "Limitaciones presupuestales de la institución",
+    origin: "Económico",
+    mitigation: "Proponer fases de implementación y modelos de costos escalonados."
+  }
+];
+
+const workPlan = [
+  {
+    month: "1",
+    activity: "Ajuste de requerimientos, diseño funcional y técnico de la plataforma, definición de roles y alcance del piloto."
+  },
+  {
+    month: "2",
+    activity: "Desarrollo del módulo de gestión de tareas y roles, diseño de interfaz y pruebas internas."
+  },
+  {
+    month: "3",
+    activity: "Desarrollo del módulo de comunicación y seguimiento, integración con sistemas existentes (si aplica)."
+  },
+  {
+    month: "4",
+    activity: "Diseño e implementación de los primeros talleres de habilidades blandas, pruebas piloto con grupos reducidos."
+  },
+  {
+    month: "5",
+    activity: "Implementación del piloto con equipos académicos seleccionados, acompañamiento y soporte técnico."
+  },
+  {
+    month: "6",
+    activity: "Recolección de datos (uso, satisfacción, impacto), ajustes a la plataforma y preparación de informe de resultados."
+  }
+];
+
+const state = {
+  activeSection: "inicio",
+  canvasKey: "valor",
+  timelineMonth: "1",
+  raf: null,
+  particles: []
+};
+
+const elements = {};
+
+function cacheElements() {
+  elements.panels = [...document.querySelectorAll("[data-section]")];
+  elements.navLinks = [...document.querySelectorAll("[data-nav]")];
+  elements.jumpButtons = [...document.querySelectorAll("[data-jump]")];
+  elements.prev = document.getElementById("prevSection");
+  elements.next = document.getElementById("nextSection");
+  elements.progress = document.getElementById("progressBar");
+  elements.menuToggle = document.querySelector(".menu-toggle");
+  elements.sectionNav = document.getElementById("sectionNav");
+  elements.modal = document.getElementById("contentModal");
+  elements.modalTitle = document.getElementById("modalTitle");
+  elements.modalText = document.getElementById("modalText");
+  elements.canvasGrid = document.getElementById("canvasGrid");
+  elements.canvasDetail = document.getElementById("canvasDetail");
+  elements.investmentRows = document.getElementById("investmentRows");
+  elements.riskAccordion = document.getElementById("riskAccordion");
+  elements.timeline = document.getElementById("timeline");
+  elements.heroCanvas = document.getElementById("heroCanvas");
 }
 
-function formatPercent(value) {
-  return new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: 4,
-    style: "percent"
-  }).format(Number(value));
+function setActiveSection(sectionId, options = {}) {
+  if (!sections.includes(sectionId)) {
+    sectionId = "inicio";
+  }
+
+  state.activeSection = sectionId;
+
+  elements.panels.forEach((panel) => {
+    const isActive = panel.dataset.section === sectionId;
+    panel.classList.toggle("active", isActive);
+    panel.setAttribute("aria-hidden", String(!isActive));
+  });
+
+  elements.navLinks.forEach((link) => {
+    const isActive = link.dataset.nav === sectionId;
+    link.classList.toggle("active", isActive);
+    if (link.classList.contains("nav-link")) {
+      link.setAttribute("aria-current", isActive ? "page" : "false");
+    }
+  });
+
+  const index = sections.indexOf(sectionId);
+  elements.prev.disabled = index === 0;
+  elements.next.disabled = index === sections.length - 1;
+  elements.progress.style.width = `${((index + 1) / sections.length) * 100}%`;
+  elements.sectionNav.classList.remove("open");
+  elements.menuToggle.setAttribute("aria-expanded", "false");
+
+  if (!options.skipHash) {
+    history.replaceState(null, "", `#${sectionId}`);
+  }
+
+  if (!options.skipScroll) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (sectionId === "inversion") {
+    animateInvestmentBars();
+  }
 }
 
-function parseNumericInput(value, fallback = 0) {
-  const number = Number(value);
-  return Number.isFinite(number) ? number : fallback;
+function goToOffset(offset) {
+  const current = sections.indexOf(state.activeSection);
+  const nextIndex = Math.min(sections.length - 1, Math.max(0, current + offset));
+  setActiveSection(sections[nextIndex]);
 }
 
-function resizeArray(source, size, filler) {
-  return Array.from({ length: size }, (_, index) => (
-    source[index] !== undefined ? source[index] : filler(index)
-  ));
-}
+function bindNavigation() {
+  elements.navLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      setActiveSection(link.dataset.nav);
+    });
+  });
 
-function resizeMatrix(source, size) {
-  return Array.from({ length: size }, (_, row) => (
-    Array.from({ length: size }, (_, column) => {
-      if (source[row] && source[row][column] !== undefined) {
-        return source[row][column];
+  elements.jumpButtons.forEach((button) => {
+    button.addEventListener("click", () => setActiveSection(button.dataset.jump));
+  });
+
+  elements.prev.addEventListener("click", () => goToOffset(-1));
+  elements.next.addEventListener("click", () => goToOffset(1));
+
+  elements.menuToggle.addEventListener("click", () => {
+    const open = !elements.sectionNav.classList.contains("open");
+    elements.sectionNav.classList.toggle("open", open);
+    elements.menuToggle.setAttribute("aria-expanded", String(open));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (elements.modal.classList.contains("open")) {
+      if (event.key === "Escape") {
+        closeModal();
       }
-
-      return row === column ? 1 : 0;
-    })
-  ));
-}
-
-function setStatus(message, tone = "normal") {
-  elements.statusMessage.textContent = message;
-  elements.statusMessage.classList.toggle("warning", tone === "warning");
-  elements.statusMessage.classList.toggle("error", tone === "error");
-}
-
-function updateCostVisibility() {
-  elements.costEditorBlock.style.display = model.includeCosts ? "" : "none";
-  elements.costResultsPanel.style.display = model.includeCosts && model.result && model.result.costs ? "" : "none";
-}
-
-function resizeModel(nextSize) {
-  const size = Math.max(1, Math.floor(parseNumericInput(nextSize, model.size)));
-
-  model.size = size;
-  model.stateNames = resizeArray(model.stateNames, size, (index) => `State ${index + 1}`);
-  model.matrix = resizeMatrix(model.matrix, size);
-  model.vector = resizeArray(model.vector, size, (index) => (index === 0 ? 1 : 0));
-  model.costs = resizeArray(model.costs, size, () => 0);
-  model.result = null;
-
-  renderEditors();
-  renderHeatmap(model.matrix, model.stateNames);
-  clearResults();
-}
-
-function renderEditors() {
-  elements.sizeInput.value = model.size;
-  elements.iterationsInput.value = model.iterations;
-  elements.includeCostsInput.checked = model.includeCosts;
-
-  renderStateNameEditor();
-  renderMatrixEditor();
-  renderVectorEditor();
-  renderCostEditor();
-  updateCostVisibility();
-}
-
-function renderStateNameEditor() {
-  elements.stateNameEditor.innerHTML = "";
-
-  model.stateNames.forEach((name, index) => {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = name;
-    input.placeholder = `State ${index + 1}`;
-    input.dataset.index = String(index);
-    input.addEventListener("input", (event) => {
-      const cursor = Number(event.target.dataset.index);
-      model.stateNames[cursor] = event.target.value || `State ${cursor + 1}`;
-      updateStateLabels();
-    });
-
-    elements.stateNameEditor.appendChild(input);
-  });
-}
-
-function renderMatrixEditor() {
-  elements.matrixEditor.innerHTML = "";
-  elements.matrixEditor.style.gridTemplateColumns = `104px repeat(${model.size}, 92px)`;
-
-  const corner = document.createElement("div");
-  corner.className = "matrix-label";
-  corner.textContent = "From / To";
-  elements.matrixEditor.appendChild(corner);
-
-  model.stateNames.forEach((name, index) => {
-    const label = document.createElement("div");
-    label.className = "matrix-label";
-    label.dataset.stateLabelIndex = String(index);
-    label.textContent = name;
-    elements.matrixEditor.appendChild(label);
-  });
-
-  model.matrix.forEach((row, rowIndex) => {
-    const rowLabel = document.createElement("div");
-    rowLabel.className = "matrix-label";
-    rowLabel.dataset.stateLabelIndex = String(rowIndex);
-    rowLabel.textContent = model.stateNames[rowIndex];
-    elements.matrixEditor.appendChild(rowLabel);
-
-    row.forEach((cell, columnIndex) => {
-      const input = document.createElement("input");
-      input.type = "number";
-      input.min = "0";
-      input.step = "0.01";
-      input.value = cell;
-      input.dataset.row = String(rowIndex);
-      input.dataset.column = String(columnIndex);
-      input.addEventListener("input", (event) => {
-        const rowCursor = Number(event.target.dataset.row);
-        const columnCursor = Number(event.target.dataset.column);
-        model.matrix[rowCursor][columnCursor] = parseNumericInput(event.target.value);
-        renderHeatmap(model.matrix, model.stateNames);
-      });
-
-      elements.matrixEditor.appendChild(input);
-    });
-  });
-}
-
-function renderVectorEditor() {
-  renderNamedNumberInputs(elements.vectorEditor, model.vector, "v0", (index, value) => {
-    model.vector[index] = value;
-  });
-}
-
-function renderCostEditor() {
-  renderNamedNumberInputs(elements.costEditor, model.costs, "c", (index, value) => {
-    model.costs[index] = value;
-  });
-}
-
-function renderNamedNumberInputs(container, values, prefix, onChange) {
-  container.innerHTML = "";
-
-  values.forEach((value, index) => {
-    const field = document.createElement("label");
-    field.className = "vector-field";
-
-    const label = document.createElement("span");
-    label.dataset.stateLabelIndex = String(index);
-    label.textContent = `${prefix} - ${model.stateNames[index]}`;
-
-    const input = document.createElement("input");
-    input.type = "number";
-    input.step = "0.01";
-    input.value = value;
-    input.dataset.index = String(index);
-    input.addEventListener("input", (event) => {
-      onChange(Number(event.target.dataset.index), parseNumericInput(event.target.value));
-    });
-
-    field.append(label, input);
-    container.appendChild(field);
-  });
-}
-
-function updateStateLabels() {
-  document.querySelectorAll("[data-state-label-index]").forEach((node) => {
-    const index = Number(node.dataset.stateLabelIndex);
-
-    if (node.tagName === "SPAN") {
-      const prefix = node.textContent.split(" - ")[0];
-      node.textContent = `${prefix} - ${model.stateNames[index]}`;
       return;
     }
 
-    node.textContent = model.stateNames[index];
-  });
-
-  renderHeatmap(model.matrix, model.stateNames);
-}
-
-function normalizeRows() {
-  model.matrix = model.matrix.map((row, rowIndex) => {
-    const total = row.reduce((sum, value) => sum + Number(value), 0);
-
-    if (total <= 0) {
-      return row.map((_, columnIndex) => (rowIndex === columnIndex ? 1 : 0));
+    if (event.key === "ArrowRight") {
+      goToOffset(1);
     }
 
-    return row.map((value) => Number((value / total).toFixed(6)));
+    if (event.key === "ArrowLeft") {
+      goToOffset(-1);
+    }
   });
-
-  renderMatrixEditor();
-  renderHeatmap(model.matrix, model.stateNames);
 }
 
-function loadExample() {
-  model.size = 3;
-  model.iterations = 10;
-  model.includeCosts = true;
-  model.stateNames = ["Netflix", "Disney+", "Prime Video"];
-  model.matrix = [
-    [0.7, 0.2, 0.1],
-    [0.25, 0.5, 0.25],
-    [0.15, 0.25, 0.6]
-  ];
-  model.vector = [1, 0, 0];
-  model.costs = [12, 9, 15];
-  model.result = null;
+function bindExpandableCards() {
+  document.querySelectorAll("[data-expand-group]").forEach((group) => {
+    const cards = [...group.querySelectorAll("button")];
 
-  renderEditors();
-  renderHeatmap(model.matrix, model.stateNames);
-  computeAll();
-}
-
-function collectPayload() {
-  model.iterations = Math.max(1, Math.floor(parseNumericInput(elements.iterationsInput.value, 10)));
-
-  const payload = {
-    matrix: model.matrix,
-    vector: model.vector,
-    iterations: model.iterations,
-    stateNames: model.stateNames
-  };
-
-  if (model.includeCosts) {
-    payload.costs = model.costs;
-  }
-
-  return payload;
-}
-
-async function computeAll() {
-  setStatus("Computing");
-  elements.computeButton.disabled = true;
-
-  try {
-    const response = await fetch(`${model.apiBaseUrl}/compute/all`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(collectPayload())
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        cards.forEach((item) => item.classList.toggle("active", item === card));
+      });
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || "The API could not compute this model.");
-    }
-
-    model.result = data;
-    renderResults(data);
-
-    if (data.warnings.length > 0) {
-      setStatus(`${data.warnings.length} warning${data.warnings.length === 1 ? "" : "s"}`, "warning");
-    } else {
-      setStatus("Computed");
-    }
-  } catch (error) {
-    model.result = null;
-    clearResults();
-    setStatus(error.message, "error");
-  } finally {
-    elements.computeButton.disabled = false;
-  }
-}
-
-function clearResults() {
-  elements.evolutionTable.innerHTML = "";
-  elements.powerTable.innerHTML = "";
-  elements.powerSelect.innerHTML = "";
-  elements.stationaryList.innerHTML = "";
-  elements.costSummary.innerHTML = "";
-  elements.costTable.innerHTML = "";
-  destroyCharts();
-  updateCostVisibility();
-}
-
-function renderResults(result) {
-  renderEvolutionTable(result);
-  renderStationary(result);
-  renderHeatmap(result.input.matrix, result.input.stateNames);
-  renderCharts(result);
-  renderPowerControls(result);
-  renderCosts(result);
-  updateCostVisibility();
-}
-
-function renderEvolutionTable(result) {
-  const names = result.input.stateNames;
-  const hasCosts = Boolean(result.costs);
-  const header = ["Step", ...names, hasCosts ? "Expected value" : null].filter(Boolean);
-
-  elements.evolutionTable.innerHTML = "";
-  elements.evolutionTable.appendChild(createTableHead(header));
-
-  const body = document.createElement("tbody");
-
-  result.evolution.steps.forEach((entry) => {
-    const row = document.createElement("tr");
-    appendCell(row, `n=${entry.step}`);
-
-    entry.vector.forEach((value) => appendCell(row, formatNumber(value)));
-
-    if (hasCosts) {
-      const costEntry = result.costs.byStep.find((item) => item.step === entry.step);
-      appendCell(row, formatNumber(costEntry.expectedValue));
-    }
-
-    body.appendChild(row);
   });
 
-  elements.evolutionTable.appendChild(body);
-}
-
-function renderStationary(result) {
-  elements.stationaryList.innerHTML = "";
-
-  result.stationary.distribution.forEach((value, index) => {
-    const row = document.createElement("div");
-    row.className = "stationary-row";
-
-    const label = document.createElement("span");
-    label.textContent = result.input.stateNames[index];
-
-    const number = document.createElement("strong");
-    number.textContent = formatPercent(value);
-
-    row.append(label, number);
-    elements.stationaryList.appendChild(row);
+  document.querySelectorAll("[data-module]").forEach((module) => {
+    const trigger = module.querySelector(".module-trigger");
+    trigger.addEventListener("click", () => module.classList.toggle("active"));
   });
 }
 
-function renderHeatmap(matrix, names) {
-  elements.heatmap.innerHTML = "";
-  const size = matrix.length;
-  const maxValue = Math.max(1, ...matrix.flat().map(Number));
-  elements.heatmap.style.gridTemplateColumns = `104px repeat(${size}, 92px)`;
+function renderCanvas() {
+  elements.canvasGrid.innerHTML = "";
 
-  const corner = document.createElement("div");
-  corner.className = "heatmap-label";
-  corner.textContent = "From / To";
-  elements.heatmap.appendChild(corner);
+  canvasBlocks.forEach((block) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `canvas-block ${block.className || ""}`.trim();
+    button.dataset.canvasKey = block.key;
 
-  names.forEach((name) => {
-    const label = document.createElement("div");
-    label.className = "heatmap-label";
-    label.textContent = name;
-    elements.heatmap.appendChild(label);
+    const title = document.createElement("h3");
+    title.textContent = block.title;
+    button.appendChild(title);
+    button.appendChild(createList(block.items));
+
+    button.addEventListener("click", () => setCanvasDetail(block.key));
+    elements.canvasGrid.appendChild(button);
   });
 
-  matrix.forEach((row, rowIndex) => {
-    const rowLabel = document.createElement("div");
-    rowLabel.className = "heatmap-label";
-    rowLabel.textContent = names[rowIndex];
-    elements.heatmap.appendChild(rowLabel);
+  setCanvasDetail(state.canvasKey);
+}
 
-    row.forEach((value) => {
-      const intensity = Math.max(0.1, Math.min(0.92, Number(value) / maxValue));
-      const cell = document.createElement("div");
-      cell.className = "heatmap-cell";
-      cell.style.background = `rgba(22, 143, 130, ${0.18 + intensity * 0.68})`;
-      cell.textContent = formatNumber(value, 4);
-      elements.heatmap.appendChild(cell);
+function setCanvasDetail(key) {
+  const block = canvasBlocks.find((item) => item.key === key) || canvasBlocks[0];
+  state.canvasKey = block.key;
+
+  document.querySelectorAll(".canvas-block").forEach((button) => {
+    button.classList.toggle("active", button.dataset.canvasKey === block.key);
+  });
+
+  elements.canvasDetail.innerHTML = "";
+
+  const eyebrow = document.createElement("p");
+  eyebrow.className = "eyebrow";
+  eyebrow.textContent = "Canvas";
+
+  const title = document.createElement("h3");
+  title.textContent = block.title;
+
+  elements.canvasDetail.append(eyebrow, title, createList(block.items));
+}
+
+function renderInvestment() {
+  const total = 20000000;
+  elements.investmentRows.innerHTML = "";
+
+  investmentRows.forEach((row) => {
+    const tr = document.createElement("tr");
+    const rubro = document.createElement("td");
+    const monto = document.createElement("td");
+    const justificacion = document.createElement("td");
+    const visual = document.createElement("td");
+    const bar = document.createElement("div");
+    const fill = document.createElement("span");
+
+    rubro.textContent = row.rubro;
+    monto.textContent = row.monto;
+    monto.className = "money";
+    justificacion.textContent = row.justificacion;
+    bar.className = "bar";
+    fill.className = "bar-fill";
+    fill.dataset.width = `${Math.min(100, (row.value / total) * 100)}%`;
+    bar.appendChild(fill);
+    visual.appendChild(bar);
+    tr.append(rubro, monto, justificacion, visual);
+    elements.investmentRows.appendChild(tr);
+  });
+}
+
+function animateInvestmentBars() {
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".bar-fill").forEach((bar) => {
+      bar.style.width = bar.dataset.width || "0";
     });
   });
 }
 
-function renderCharts(result) {
-  destroyCharts();
+function renderRisks() {
+  elements.riskAccordion.innerHTML = "";
 
-  const lineContext = elements.lineChart.getContext("2d");
-  const pieContext = elements.stationaryChart.getContext("2d");
-  const labels = result.evolution.steps.map((entry) => `n=${entry.step}`);
+  risks.forEach((item, index) => {
+    const article = document.createElement("article");
+    article.className = `accordion-item ${index === 0 ? "active" : ""}`;
 
-  model.charts.line = new Chart(lineContext, {
-    type: "line",
-    data: {
-      labels,
-      datasets: result.input.stateNames.map((name, index) => ({
-        label: name,
-        data: result.evolution.steps.map((entry) => entry.vector[index]),
-        borderColor: palette[index % palette.length],
-        backgroundColor: `${palette[index % palette.length]}22`,
-        borderWidth: 3,
-        pointRadius: 3,
-        tension: 0.28
-      }))
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: {
-        intersect: false,
-        mode: "index"
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          suggestedMax: 1
-        }
-      },
-      plugins: {
-        legend: {
-          labels: {
-            boxWidth: 12,
-            usePointStyle: true
-          }
+    const trigger = document.createElement("button");
+    trigger.className = "accordion-trigger";
+    trigger.type = "button";
+    trigger.innerHTML = `
+      <span>Riesgo</span>
+      <strong>${item.risk}</strong>
+      <em class="accordion-indicator" aria-hidden="true">+</em>
+    `;
+
+    const panel = document.createElement("div");
+    panel.className = "accordion-panel";
+    panel.innerHTML = `
+      <dl class="accordion-meta">
+        <div>
+          <dt>Origen (DOFA/PESTEL)</dt>
+          <dd>${item.origin}</dd>
+        </div>
+        <div>
+          <dt>Estrategia de mitigación</dt>
+          <dd>${item.mitigation}</dd>
+        </div>
+      </dl>
+    `;
+
+    trigger.addEventListener("click", () => {
+      document.querySelectorAll(".accordion-item").forEach((node) => {
+        node.classList.toggle("active", node === article);
+      });
+    });
+
+    article.append(trigger, panel);
+    elements.riskAccordion.appendChild(article);
+  });
+}
+
+function renderTimeline() {
+  elements.timeline.innerHTML = "";
+
+  const steps = document.createElement("div");
+  steps.className = "timeline-steps";
+
+  const panel = document.createElement("article");
+  panel.className = "timeline-panel";
+  panel.setAttribute("aria-live", "polite");
+
+  workPlan.forEach((entry) => {
+    const button = document.createElement("button");
+    button.className = `timeline-step ${entry.month === state.timelineMonth ? "active" : ""}`;
+    button.type = "button";
+    button.textContent = `Mes ${entry.month}`;
+    button.addEventListener("click", () => {
+      state.timelineMonth = entry.month;
+      updateTimeline(panel);
+      document.querySelectorAll(".timeline-step").forEach((step) => {
+        step.classList.toggle("active", step === button);
+      });
+    });
+    steps.appendChild(button);
+  });
+
+  elements.timeline.append(steps, panel);
+  updateTimeline(panel);
+}
+
+function updateTimeline(panel) {
+  const entry = workPlan.find((item) => item.month === state.timelineMonth) || workPlan[0];
+  panel.innerHTML = `
+    <span>Mes ${entry.month}</span>
+    <h3>Actividades principales</h3>
+    <p>${entry.activity}</p>
+  `;
+}
+
+function bindModal() {
+  document.querySelectorAll("[data-modal-key]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const content = pestelContent[button.dataset.modalKey];
+      openModal(content);
+    });
+  });
+
+  document.querySelectorAll("[data-close-modal]").forEach((node) => {
+    node.addEventListener("click", closeModal);
+  });
+}
+
+function openModal(content) {
+  if (!content) {
+    return;
+  }
+
+  elements.modalTitle.textContent = content.title;
+  elements.modalText.textContent = content.text;
+  elements.modal.classList.add("open");
+  elements.modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  elements.modal.classList.remove("open");
+  elements.modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+function createList(items) {
+  const list = document.createElement("ul");
+  items.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    list.appendChild(li);
+  });
+  return list;
+}
+
+function setupHeroCanvas() {
+  const canvas = elements.heroCanvas;
+  const context = canvas.getContext("2d");
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+    canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = Math.max(26, Math.floor(rect.width / 38));
+    state.particles = Array.from({ length: count }, (_, index) => ({
+      x: (index * 83) % Math.max(rect.width, 1),
+      y: (index * 47) % Math.max(rect.height, 1),
+      vx: 0.18 + (index % 5) * 0.035,
+      vy: 0.12 + (index % 7) * 0.028,
+      r: 1.6 + (index % 4) * 0.35
+    }));
+  }
+
+  function draw() {
+    const rect = canvas.getBoundingClientRect();
+    context.clearRect(0, 0, rect.width, rect.height);
+    context.strokeStyle = "rgba(123, 196, 255, 0.18)";
+    context.lineWidth = 1;
+    context.fillStyle = "rgba(123, 196, 255, 0.74)";
+
+    state.particles.forEach((particle, index) => {
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+
+      if (particle.x > rect.width + 20) particle.x = -20;
+      if (particle.y > rect.height + 20) particle.y = -20;
+
+      context.beginPath();
+      context.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
+      context.fill();
+
+      for (let cursor = index + 1; cursor < state.particles.length; cursor += 1) {
+        const other = state.particles[cursor];
+        const dx = particle.x - other.x;
+        const dy = particle.y - other.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 122) {
+          context.globalAlpha = 1 - distance / 122;
+          context.beginPath();
+          context.moveTo(particle.x, particle.y);
+          context.lineTo(other.x, other.y);
+          context.stroke();
+          context.globalAlpha = 1;
         }
       }
-    }
-  });
+    });
 
-  model.charts.pie = new Chart(pieContext, {
-    type: "pie",
-    data: {
-      labels: result.input.stateNames,
-      datasets: [{
-        data: result.stationary.distribution,
-        backgroundColor: result.input.stateNames.map((_, index) => palette[index % palette.length]),
-        borderColor: "#ffffff",
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: "bottom",
-          labels: {
-            boxWidth: 12,
-            usePointStyle: true
-          }
-        }
-      }
-    }
-  });
-}
-
-function destroyCharts() {
-  Object.values(model.charts).forEach((chart) => {
-    if (chart) {
-      chart.destroy();
-    }
-  });
-
-  model.charts.line = null;
-  model.charts.pie = null;
-}
-
-function renderPowerControls(result) {
-  elements.powerSelect.innerHTML = "";
-
-  result.powers.forEach((entry) => {
-    const option = document.createElement("option");
-    option.value = String(entry.step);
-    option.textContent = `P^${entry.step}`;
-    elements.powerSelect.appendChild(option);
-  });
-
-  elements.powerSelect.value = "1";
-  elements.powerSelect.onchange = () => {
-    const step = Number(elements.powerSelect.value);
-    const entry = result.powers.find((item) => item.step === step);
-    renderPowerTable(entry, result.input.stateNames);
-  };
-
-  renderPowerTable(result.powers[0], result.input.stateNames);
-}
-
-function renderPowerTable(entry, names) {
-  if (!entry) {
-    elements.powerTable.innerHTML = "";
-    return;
+    state.raf = requestAnimationFrame(draw);
   }
 
-  elements.powerTable.innerHTML = "";
-  elements.powerTable.appendChild(createTableHead(["From / To", ...names]));
+  resize();
+  draw();
+  window.addEventListener("resize", resize);
+}
 
-  const body = document.createElement("tbody");
-
-  entry.matrix.forEach((rowValues, rowIndex) => {
-    const row = document.createElement("tr");
-    appendCell(row, names[rowIndex]);
-    rowValues.forEach((value) => appendCell(row, formatNumber(value)));
-    body.appendChild(row);
+function initializeFromHash() {
+  const hash = window.location.hash.replace("#", "");
+  setActiveSection(sections.includes(hash) ? hash : "inicio", {
+    skipHash: !hash,
+    skipScroll: true
   });
-
-  elements.powerTable.appendChild(body);
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
-function renderCosts(result) {
-  elements.costSummary.innerHTML = "";
-  elements.costTable.innerHTML = "";
-
-  if (!result.costs) {
-    return;
-  }
-
-  [
-    ["Cumulative", result.costs.cumulativeExpectedValue],
-    ["Final step", result.costs.finalStepExpectedValue],
-    ["Steady state", result.costs.stationaryExpectedValue]
-  ].forEach(([labelText, value]) => {
-    const item = document.createElement("div");
-    item.className = "summary-item";
-
-    const label = document.createElement("span");
-    label.textContent = labelText;
-
-    const number = document.createElement("strong");
-    number.textContent = formatNumber(value);
-
-    item.append(label, number);
-    elements.costSummary.appendChild(item);
-  });
-
-  elements.costTable.appendChild(createTableHead(["Step", "Expected value"]));
-
-  const body = document.createElement("tbody");
-  result.costs.byStep.forEach((entry) => {
-    const row = document.createElement("tr");
-    appendCell(row, `n=${entry.step}`);
-    appendCell(row, formatNumber(entry.expectedValue));
-    body.appendChild(row);
-  });
-
-  elements.costTable.appendChild(body);
-}
-
-function createTableHead(labels) {
-  const head = document.createElement("thead");
-  const row = document.createElement("tr");
-
-  labels.forEach((label) => {
-    const cell = document.createElement("th");
-    cell.textContent = label;
-    row.appendChild(cell);
-  });
-
-  head.appendChild(row);
-  return head;
-}
-
-function appendCell(row, value) {
-  const cell = document.createElement("td");
-  cell.textContent = value;
-  row.appendChild(cell);
-}
-
-function csvEscape(value) {
-  const text = String(value ?? "");
-
-  if (/[",\n]/.test(text)) {
-    return `"${text.replace(/"/g, "\"\"")}"`;
-  }
-
-  return text;
-}
-
-function toCsvRow(values) {
-  return values.map(csvEscape).join(",");
-}
-
-function buildCsvReport(result) {
-  const rows = [];
-  const names = result.input.stateNames;
-
-  rows.push(toCsvRow(["Markov Chain Desktop Suite"]));
-  rows.push("");
-  rows.push(toCsvRow(["Transition matrix"]));
-  rows.push(toCsvRow(["From / To", ...names]));
-  result.input.matrix.forEach((row, index) => rows.push(toCsvRow([names[index], ...row])));
-  rows.push("");
-
-  rows.push(toCsvRow(["Initial vector", ...result.input.vector]));
-  if (result.input.costs) {
-    rows.push(toCsvRow(["Costs or revenues", ...result.input.costs]));
-  }
-  rows.push("");
-
-  rows.push(toCsvRow(["Evolution"]));
-  rows.push(toCsvRow(["Step", ...names, result.costs ? "Expected value" : null].filter(Boolean)));
-  result.evolution.steps.forEach((entry) => {
-    const expected = result.costs
-      ? result.costs.byStep.find((item) => item.step === entry.step).expectedValue
-      : null;
-    rows.push(toCsvRow(["n=" + entry.step, ...entry.vector, expected].filter((value) => value !== null)));
-  });
-  rows.push("");
-
-  rows.push(toCsvRow(["Stationary distribution", result.stationary.method, `residual=${result.stationary.residual}`]));
-  rows.push(toCsvRow(names));
-  rows.push(toCsvRow(result.stationary.distribution));
-  rows.push("");
-
-  if (result.costs) {
-    rows.push(toCsvRow(["Cost and revenue totals"]));
-    rows.push(toCsvRow(["Cumulative", result.costs.cumulativeExpectedValue]));
-    rows.push(toCsvRow(["Final step", result.costs.finalStepExpectedValue]));
-    rows.push(toCsvRow(["Steady state", result.costs.stationaryExpectedValue]));
-    rows.push("");
-  }
-
-  rows.push(toCsvRow(["Matrix powers"]));
-  result.powers.forEach((entry) => {
-    rows.push(toCsvRow([`P^${entry.step}`]));
-    rows.push(toCsvRow(["From / To", ...names]));
-    entry.matrix.forEach((row, index) => rows.push(toCsvRow([names[index], ...row])));
-    rows.push("");
-  });
-
-  return rows.join("\n");
-}
-
-async function exportCsv() {
-  if (!model.result) {
-    await computeAll();
-  }
-
-  if (!model.result) {
-    return;
-  }
-
-  const outcome = await window.markovDesktop.exportCsv(buildCsvReport(model.result));
-
-  if (outcome && !outcome.canceled) {
-    setStatus("CSV exported");
-  }
-}
-
-async function exportPdf() {
-  if (!model.result) {
-    await computeAll();
-  }
-
-  const outcome = await window.markovDesktop.exportPdf();
-
-  if (outcome && !outcome.canceled) {
-    setStatus("PDF exported");
-  }
-}
-
-function bindEvents() {
-  elements.sizeInput.addEventListener("change", (event) => resizeModel(event.target.value));
-  elements.iterationsInput.addEventListener("change", (event) => {
-    model.iterations = Math.max(1, Math.floor(parseNumericInput(event.target.value, 10)));
-    event.target.value = model.iterations;
-  });
-  elements.includeCostsInput.addEventListener("change", (event) => {
-    model.includeCosts = event.target.checked;
-    updateCostVisibility();
-  });
-  elements.increaseSizeButton.addEventListener("click", () => resizeModel(model.size + 1));
-  elements.decreaseSizeButton.addEventListener("click", () => resizeModel(model.size - 1));
-  elements.normalizeButton.addEventListener("click", normalizeRows);
-  elements.exampleButton.addEventListener("click", loadExample);
-  elements.computeButton.addEventListener("click", computeAll);
-  elements.csvButton.addEventListener("click", exportCsv);
-  elements.pdfButton.addEventListener("click", exportPdf);
-}
-
-function cacheElements() {
-  elements = {
-    apiStatus: document.getElementById("apiStatus"),
-    computeButton: document.getElementById("computeButton"),
-    costEditor: document.getElementById("costEditor"),
-    costEditorBlock: document.getElementById("costEditorBlock"),
-    costResultsPanel: document.getElementById("costResultsPanel"),
-    costSummary: document.getElementById("costSummary"),
-    costTable: document.getElementById("costTable"),
-    csvButton: document.getElementById("csvButton"),
-    decreaseSizeButton: document.getElementById("decreaseSizeButton"),
-    evolutionTable: document.getElementById("evolutionTable"),
-    exampleButton: document.getElementById("exampleButton"),
-    heatmap: document.getElementById("heatmap"),
-    includeCostsInput: document.getElementById("includeCostsInput"),
-    increaseSizeButton: document.getElementById("increaseSizeButton"),
-    iterationsInput: document.getElementById("iterationsInput"),
-    lineChart: document.getElementById("lineChart"),
-    matrixEditor: document.getElementById("matrixEditor"),
-    normalizeButton: document.getElementById("normalizeButton"),
-    pdfButton: document.getElementById("pdfButton"),
-    powerSelect: document.getElementById("powerSelect"),
-    powerTable: document.getElementById("powerTable"),
-    sizeInput: document.getElementById("sizeInput"),
-    stationaryChart: document.getElementById("stationaryChart"),
-    stationaryList: document.getElementById("stationaryList"),
-    stateNameEditor: document.getElementById("stateNameEditor"),
-    statusMessage: document.getElementById("statusMessage"),
-    vectorEditor: document.getElementById("vectorEditor")
-  };
-}
-
-async function initialize() {
+function initialize() {
   cacheElements();
-  bindEvents();
-  renderEditors();
-  renderHeatmap(model.matrix, model.stateNames);
-
-  try {
-    model.apiBaseUrl = await window.markovDesktop.getApiUrl();
-    elements.apiStatus.textContent = model.apiBaseUrl;
-    await computeAll();
-  } catch (error) {
-    setStatus(error.message, "error");
-    elements.apiStatus.textContent = "API unavailable";
-  }
+  renderCanvas();
+  renderInvestment();
+  renderRisks();
+  renderTimeline();
+  bindNavigation();
+  bindExpandableCards();
+  bindModal();
+  setupHeroCanvas();
+  initializeFromHash();
 }
 
 window.addEventListener("DOMContentLoaded", initialize);

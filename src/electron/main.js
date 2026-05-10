@@ -20,8 +20,8 @@ function registerIpcHandlers() {
     }
 
     const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, {
-      title: "Export Markov report as PDF",
-      defaultPath: "markov-chain-report.pdf",
+      title: "Exportar presentación EquiFlow como PDF",
+      defaultPath: "equiflow-presentacion.pdf",
       filters: [{ name: "PDF", extensions: ["pdf"] }]
     });
 
@@ -74,8 +74,8 @@ async function createMainWindow() {
     height: 940,
     minWidth: 1080,
     minHeight: 720,
-    title: "Markov Chain Desktop Suite",
-    backgroundColor: "#f4f8fb",
+    title: "EquiFlow",
+    backgroundColor: "#f4f7fb",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
